@@ -9,6 +9,7 @@ import Pagination from "../Pagination/Pagination";
 import useModalControl from "../../hooks/useModalControl";
 import Modal from "../Modal/Modal";
 import NoteForm from "../NoteForm/NoteForm";
+import Loader from "../Loader/Loader";
 
 function App() {
   const { isModalOpen, openModal, closeModal } = useModalControl();
@@ -46,10 +47,16 @@ function App() {
             Create note +
           </button>
         </header>
-        {isLoading && <p>Loading notes...</p>}
-        {data && !isLoading && <NoteList notes={data.notes} />}
+        {isLoading && <Loader />}
+        {data?.notes && data.notes.length > 0 && (
+          <> {data && !isLoading && <NoteList notes={data.notes} />}</>
+        )}
+        {!isLoading &&
+          data &&
+          data.notes.length === 0 &&
+          data.totalPages === 0 && <p>No notes found for your search ☹️</p>}
         {isModalOpen && (
-          <Modal>
+          <Modal onClose={closeModal}>
             <NoteForm onClose={closeModal} onSuccess={closeModal} />
           </Modal>
         )}
