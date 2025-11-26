@@ -3,8 +3,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import type { FormikHelpers } from "formik";
 import * as Yup from "yup";
-import type { CreateNoteData } from "../../types/note";
-import { useId } from "react";
 import { createNote } from "../../services/noteService";
 interface NoteFormProps {
   onClose: () => void;
@@ -38,7 +36,6 @@ const NoteForm = ({ onClose, onSuccess }: NoteFormProps) => {
   const { mutate, isPending } = useMutation({
     mutationFn: createNote,
   });
-  // const fieldId = useId();
 
   const handleSubmit = (
     values: NoteFormValues,
