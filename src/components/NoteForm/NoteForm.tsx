@@ -22,8 +22,8 @@ const NotesSchema = Yup.object().shape({
   title: Yup.string()
     .min(3, "Type at least 3 symbols")
     .max(50, "Title limit is 50 symbols")
-    .required("Title is requires"),
-  content: Yup.string().max(500, "Contentt limit is 500 symbols."),
+    .required("Title is required"),
+  content: Yup.string().max(500, "Content limit is 500 symbols."),
   tag: Yup.string()
     .oneOf(
       ["Todo", "Work", "Personal", "Meeting", "Shopping"],
@@ -45,10 +45,11 @@ const NoteForm = ({ onClose, onSuccess }: NoteFormProps) => {
       onSuccess: () => {
         QueryClient.invalidateQueries({ queryKey: ["notes"] });
         helpers.resetForm();
-        onSuccess?.();
+        onSuccess?.(); // якщо передано
+        onClose(); // завжди закриваємо форму після успішного створення
       },
       onError: (error) => {
-        console.log(error);
+        console.error(error);
       },
     });
   };

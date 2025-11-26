@@ -14,11 +14,17 @@ const Modal = ({ children, onClose }: ModalProps) => {
         onClose();
       }
     };
+    // блок прокрутки при відкритті модалки
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, [onClose]);
 
-  // Закрытие по клику на бекдроп
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();

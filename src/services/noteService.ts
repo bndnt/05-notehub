@@ -5,6 +5,7 @@ export interface FetchNotesResponse {
   page: number;
   notes: Note[];
   totalPages: number;
+
   // total_results: number;
 }
 
@@ -27,7 +28,7 @@ export async function fetchNotes(
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(response.data);
+  console.log(response.data);
 
   return response.data;
 }
